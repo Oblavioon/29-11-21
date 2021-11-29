@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "joueur.h"
 #include "ennemis.h"
@@ -15,21 +16,27 @@ void runGame(Player **ppj, Enemy **ppe, ListePlayer **ppl, ListeEnemy **pple, in
 	// On déclare le tableau de fonction
 	void (*plateau[3])(Player **ppj, Enemy **ppe, ListePlayer **ppl, ListeEnemy **pple) = {pVerdoyante, salleBoss, estaminet};
 
-	intro(6);
-
 	if(firstparty==0){
+		// Affichage d'intro
+    	intro(6);
+
+
 		menuDemarrage(ppj, ppl);
 
+		// Initialisation du monstre
 		initEnemy(ppe, pple);
+		randEnemy(ppe);
 
 		if((*ppj)->nom[strlen((*ppj)->nom)-1]== '\n') (*ppj)->nom[strlen((*ppj)->nom)-1] = '\0';
-		printf("Vous vous appelez %s, %s de Clergue.\n", (*ppj)->nom, (*ppj)->n_caste);
+		printf("  \t\tVous vous appelez %s, %s de Clergue.\n", (*ppj)->nom, (*ppj)->n_caste);
 
 		firstparty++;
+		sleep(5);
 	}
 
 	// Initialisation des coordonées de/des ennemis
   	depEnemy(ppe, 0);
+
 
 	while(1){
 

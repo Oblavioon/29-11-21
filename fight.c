@@ -21,6 +21,8 @@ void affStatsComb(Player **ppj, Enemy **ppe){
 	printf("\t\t%s ~ %s", (*ppj)->nom, (*ppj)->n_caste); // Joueur
 	printf("\n");
 	printf("\t\tHp : %d", (*ppj)->hp); // Joueur
+	printf("  |  ");
+	printf("Niveau : %d", (*ppj)->lvl); // Joueur
 	printf("\n");
 	printf("\t\tDp : %d", (*ppj)->dp); // Joueur
 
@@ -31,6 +33,8 @@ void affStatsComb(Player **ppj, Enemy **ppe){
 	printf("\t\t\t\t%s ~ Monstre", (*ppe)->n_caste); // Monstre
 	printf("\n");
 	printf("\t\t\t\tHp : %d", (*ppe)->hp); // Monstre
+	printf("  |  ");
+	printf("Niveau : %d", (*ppe)->lvl); // Monstre
 	printf("\n");
 	printf("\t\t\t\tDp : %d", (*ppe)->dp);	// Monstre
 	printf("\n");
@@ -39,18 +43,11 @@ void affStatsComb(Player **ppj, Enemy **ppe){
 
 // Interaction Joueur et Ennemis
 void interPE(Player **ppj, Enemy **ppe, ListePlayer **ppl, ListeEnemy **pple){
-	int temp = 0;
-
-	temp = ((*ppj)->x + (*ppj)->y) - ((*ppe)->x + (*ppe)->y);
-
-
-
-	if(temp == 0){
+	if((*ppj)->x==(*ppe)->x && (*ppj)->y==(*ppe)->y){
 		printf("OK\n");
 		menuCombat(ppj, ppe, ppl, pple);
 		// printf("\nUn ennemi.\n");
 	}
-
 }
 
 

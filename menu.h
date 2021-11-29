@@ -9,7 +9,7 @@ void purgeSTDIN();
 
 void intro(unsigned int choix);
 
-void confChoix();
+void confChoix(Player **ppj, Enemy **ppe, ListePlayer **ppl, ListeEnemy **pple);
 
 void menuDemarrage(Player **ppj, ListePlayer **ppl);
 
@@ -18,6 +18,10 @@ void menu_jeu(Player **ppj, Enemy **ppe, ListePlayer **ppl, ListeEnemy **pple);
 void menuAttack(Player **ppj, Enemy **ppe);
 
 void menuCombat(Player **ppj, Enemy **ppe, ListePlayer **ppl, ListeEnemy **pple);
+
+void deroulementCombat(Player **ppj, Enemy **ppe, ListePlayer **ppl, ListeEnemy **pple);
+
+void easterEgg(Player **ppj, Enemy **ppe, ListePlayer **ppl, ListeEnemy **pple);
 
 /*
 void menuCombatOrc(Player **ppj, Enemy **ppe, ListePlayer **ppl, ListeEnemy **pple);

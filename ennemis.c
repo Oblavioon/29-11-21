@@ -40,10 +40,8 @@ void initEnemy(Enemy **ppe, ListeEnemy **pple){
     (*ppe)->lvl = 0;
     (*ppe)->po = 0;
         // Stats
-    (*ppe)->x = 0;
-    (*ppe)->y = 0;
-
-    randEnemy(ppe);
+    (*ppe)->x = 1;
+    (*ppe)->y = 1;
 
     // Initialisation pointeurs
         // pointeur Esuivant
@@ -57,7 +55,7 @@ void randEnemy(Enemy **ppe){
     int choix=0;
 
     choix = foncSemiAl(3+1);
-    while(choix==0){
+    while(choix<=0 || choix>3){
         choix = foncSemiAl(3+1);
     }
 
@@ -86,8 +84,8 @@ void casteGobelin(Enemy **ppe){
     (*ppe)->xp += 5;
     (*ppe)->po += 2;
     //position
-    (*ppe)->x = 0;
-    (*ppe)->y = 0;
+    (*ppe)->x = 1;
+    (*ppe)->y = 1;
         // Fixe le niveau du mob
     (*ppe)->lvl = 1;
 
@@ -107,8 +105,8 @@ void casteOrc(Enemy **ppe){
     (*ppe)->xp += 10;
     (*ppe)->po += 4;
     //position
-    (*ppe)->x = 0;
-    (*ppe)->y = 0;
+    (*ppe)->x = 1;
+    (*ppe)->y = 1;
         // Fixe le niveau du mob
     (*ppe)->lvl = 1;
 
@@ -128,10 +126,10 @@ void casteWorgen(Enemy **ppe){
     (*ppe)->xp += 10;
     (*ppe)->po += 6;
     //position
-    (*ppe)->x = 0;
-    (*ppe)->y = 0;
+    (*ppe)->x = 1;
+    (*ppe)->y = 1;
         // Fixe le niveau du mob
-    (*ppe)->lvl = 3;
+    (*ppe)->lvl = 1;
 
     // Rajout du valeur Zebapik (pt bonus)
     (*ppe)->zebapik = 2;
@@ -141,8 +139,14 @@ void casteWorgen(Enemy **ppe){
 // Déplacement des personnages...
 void depEnemy(Enemy **ppe, int rpt){
     if(rpt==0){
-        (*ppe)->x = foncSemiAl(23+1);
-        (*ppe)->y = foncSemiAl(9+1);
+        (*ppe)->x = foncSemiAl(16+1);
+        while((*ppe)->x==0 || (*ppe)->x>=16){
+            (*ppe)->x = foncSemiAl(16+1);
+        }
+        (*ppe)->y = foncSemiAl(23+1);
+        while((*ppe)->y==0 || (*ppe)->y>=24){
+            (*ppe)->y = foncSemiAl(23+1);
+        }
     }
     // Si l'on veut que les ennemis se déplace aussi -automatiquement-
     // if(rpt!=0){

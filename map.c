@@ -185,7 +185,7 @@ void pVerdoyante(Player **ppj, Enemy **ppe, ListePlayer **ppl, ListeEnemy **pple
         //map[(*ppe)->y][(*ppe)->x]='m';
         // (*ppe)->x = 3;
         // (*ppe)->y = 15;
-        (*ppe) = (Enemy *)malloc_protege(sizeof(Enemy));
+        
         map[(*ppe)->y][(*ppe)->x]='m';
 
         //Mur d'enceinte
@@ -514,12 +514,9 @@ int interPM(){
 
 // Fonction dédiée à l'interaction objet
 // on reprend le principe de celle interPE (interaction Perso Enemy).
+// Interaction Personnage Objet.
 void interPO(Player **ppj, int x, int y, int *indice){
-  int temp=0;
-
-	temp = ((*ppj)->x + (*ppj)->y) - (x + y);
-
-  if(temp==0){
+  if((*ppj)->x==x && (*ppj)->y==y){
     printf("OKtp\n");
     *indice = interPM();
   }
@@ -549,7 +546,9 @@ void affStats(Player **ppj){
 
   printf("\033[1;33m  PO : %d;", (*ppj)->po); // Perso
 
-  printf("\t\t\t\t \033[1;33m Niveau : %d (%d)\n", (*ppj)->lvl, (*ppj)->xp); // Perso
+  printf("\033[1;37m  \t [m]:menu pause"); // Déplacement
+
+  printf("\t\t \033[1;33m Niveau : %d (%dxp)\n", (*ppj)->lvl, (*ppj)->xp); // Perso
 
   printf("\n");
 }

@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 
 #include "joueur.h"
 #include "ennemis.h"
@@ -149,7 +150,7 @@ void casteV(Player **ppj){
     strcpy((*ppj)->logo_caste, "V");
 }
 
-int depPerso(Player **ppj, Enemy **ppe, ListePlayer **ppl, ListeEnemy **pple){
+void depPerso(Player **ppj, Enemy **ppe, ListePlayer **ppl, ListeEnemy **pple){
   char dep;
   printf("Deplacement : ");
   scanf("%c", &dep);
@@ -172,12 +173,22 @@ int depPerso(Player **ppj, Enemy **ppe, ListePlayer **ppl, ListeEnemy **pple){
         (*ppj)->y+=1;
       }
     }
+
+    // menu pause
     if( dep == 'm' || dep == 'M'){
       menu_jeu(ppj, ppe, ppl, pple);
     }
-    //EasterEgg
-    //if( dep == 'l' && dep == 'p' || dep == 'L' && dep == 'P'){
-    //  menu_jeu(ppj, ppe, ppl, pple);
-    }
-    return 0;
+
+    // Limite pour le plateau de jeu    
+        // Pour x
+    if((*ppj)->x==0) (*ppj)->x++;
+    else if((*ppj)->x==29) (*ppj)->x--;
+        // Pour y
+    if((*ppj)->y==0) (*ppj)->y++;
+    else if((*ppj)->y==24) (*ppj)->y--; 
+
+
+    // EasterEgg
+    if(dep == '~') easterEgg(ppj, ppe, ppl, pple);
+
 }

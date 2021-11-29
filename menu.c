@@ -71,20 +71,33 @@ void intro(unsigned int choix){
 
     sleep(5);
   }
+
+  if(choix==7){
+    printf(" ▀██▀▀▀▀█                   ▄                   ▀██▀▀▀▀█               \n");
+    printf("  ██  ▄     ▄▄▄▄    ▄▄▄▄  ▄██▄    ▄▄▄▄  ▄▄▄ ▄▄   ██  ▄      ▄▄▄ ▄   ▄▄▄ ▄  \n");
+    printf("  ██▀▀█    ▀▀ ▄██  ██▄ ▀   ██   ▄█▄▄▄██  ██▀ ▀▀  ██▀▀█     ██ ██   ██ ██  \n");
+    printf("  ██       ▄█▀ ██  ▄ ▀█▄▄  ██   ██       ██      ██         █▀▀     █▀▀   \n");
+    printf(" ▄██▄▄▄▄▄█ ▀█▄▄▀█▀ █▀▄▄█▀  ▀█▄▀  ▀█▄▄▄▀ ▄██▄    ▄██▄▄▄▄▄█  ▀████▄  ▀████▄ \n");
+    printf("                                                           ▄█▄▄▄▄▀ ▄█▄▄▄▄▀  \n");
+  }
 }
 
-void confChoix(){
+void confChoix(Player **ppj, Enemy **ppe, ListePlayer **ppl, ListeEnemy **pple){
   int i;
 
   // Nous permet de valider réellement l'attaque du joueur
   // (évite certains bug)... et rajoute une sécurité
   // alternative au compteur....
-  printf("\n\tValidez votre choix (1) : ");
+  printf("\n\tValidez votre choix (1) sinon (0) : ");
   scanf("%d", &i);
-  while(i!=1){
+  while(i!=1 /*|| i!=0*/){
     printf("\n\tValidez votre choix (1) : ");
     scanf("%d", &i);
   }
+
+  //if(i==0){
+  //  menuCombat(ppj, ppe, ppl, pple);
+  //}
 }
 
 
@@ -248,110 +261,152 @@ void menuCombat(Player **ppj, Enemy **ppe, ListePlayer **ppl, ListeEnemy **pple)
     do{
     //le tableau affiché dans le terminal
 
-    if((*ppe)->id==1){
-      intro(3); // Pour les gobelins.
-    }else if((*ppe)->id==2){ 
-      intro(4); // Pour les orcs.
-    }else if((*ppe)->id==3){
-      intro(5); // Pour les worgens.
-    }
+      if((*ppe)->id==1){
+        intro(3); // Pour les gobelins.
+      }else if((*ppe)->id==2){ 
+        intro(4); // Pour les orcs.
+      }else if((*ppe)->id==3){
+        intro(5); // Pour les worgens.
+      }
 
-    printf("\n\t*************************************************\n");
-    printf("\t|\t\tMenu de combat  :\t\t|\n");
-    printf("\t*************************************************\n\t|");
-    printf("\t\t\t\t\t\t" );
-    printf("|\n\t|\t\tQue faire ? \t\t\t|\n");
-    printf("\t|\t\t\t\t\t\t|\n" );
-    printf("\t|\t\t1.Guillotine Slash \t\t|\n");
-    printf("\t|\t\t\t\t\t\t|\n" );
-    printf("\t|\t\t2.Brise mur  \t\t\t|\n");
-    printf("\t|\t\t\t\t\t\t|\n" );
-    printf("\t|\t\t3.Demembrement \t\t\t|\n");
-    printf("\t|\t\t\t\t\t\t|\n" );
-    printf("\t|\t\t4.Fuir lamentablement ...\t|\n");
-    printf("\t|\t\t\t\t\t\t|\n" );
-    printf("\t|\t\t\t\t\t\t|\n" );
-    printf("\t*************************************************\n" );
-    affStatsComb(ppj, ppe);
-    printf("\tEntrez votre choix : ");
-    scanf("%d", &choix);
+      printf("\n\t*************************************************\n");
+      printf("\t|\t\tMenu de combat  :\t\t|\n");
+      printf("\t*************************************************\n\t|");
+      printf("\t\t\t\t\t\t" );
+      printf("|\n\t|\t\tQue faire ? \t\t\t|\n");
+      printf("\t|\t\t\t\t\t\t|\n" );
+      printf("\t|\t\t1.Guillotine Slash \t\t|\n");
+      printf("\t|\t\t\t\t\t\t|\n" );
+      printf("\t|\t\t2.Brise mur  \t\t\t|\n");
+      printf("\t|\t\t\t\t\t\t|\n" );
+      printf("\t|\t\t3.Demembrement \t\t\t|\n");
+      printf("\t|\t\t\t\t\t\t|\n" );
+      printf("\t|\t\t4.Fuir lamentablement ...\t|\n");
+      printf("\t|\t\t\t\t\t\t|\n" );
+      printf("\t|\t\t\t\t\t\t|\n" );
+      printf("\t*************************************************\n" );
+      affStatsComb(ppj, ppe);
+
+      printf("\tEntrez votre choix : ");
+      scanf("%d", &choix);
       switch (choix) // appel des différentes fonctions/procédures
       {              // en fonction du choix fait par l'utilisateur
         case 1:
           headShot(ppj, ppe, 3);
           
-          confChoix();
+          confChoix(ppj, ppe, ppl, pple);
 
-          if((*ppe)->hp<=0){
-
-            // Si le joueur tue la monstre il recup ces ressources
-            (*ppj)->po+=(*ppe)->po;
-            (*ppj)->xp+=(*ppe)->xp;
-            (*ppj)->zebapik+=(*ppe)->zebapik;
-
-            // On initialise à nouveau le monstre
-            initEnemy(ppe, pple);
-
-            // On relance la partie
-            runGame(ppj, ppe, ppl, pple, 1);
-          }
+          deroulementCombat(ppj, ppe, ppl, pple);
           break;
+
         case 2:
           chestShot(ppj, ppe, 2);
 
-          confChoix();
+          confChoix(ppj, ppe, ppl, pple);
 
-          if((*ppe)->hp<=0){
-            // Si le joueur tue la monstre il recup ces ressources
-            (*ppj)->po+=(*ppe)->po;
-            (*ppj)->xp+=(*ppe)->xp;
-            (*ppj)->zebapik+=(*ppe)->zebapik;
-
-            // On initialise à nouveau le monstre
-            initEnemy(ppe, pple);
-
-            // On relance la partie
-            runGame(ppj, ppe, ppl, pple, 1);
-          }
+          deroulementCombat(ppj, ppe, ppl, pple);
           break;
+
         case 3:
           limbShot(ppj, ppe, 1);
 
-          confChoix();
+          confChoix(ppj, ppe, ppl, pple);
 
-          if((*ppe)->hp<=0){
-            // Si le joueur tue la monstre il recup ces ressources
-            (*ppj)->po+=(*ppe)->po;
-            (*ppj)->xp+=(*ppe)->xp;
-            (*ppj)->zebapik+=(*ppe)->zebapik;
-
-            // On initialise à nouveau le monstre
-            initEnemy(ppe, pple);
-
-            // On relance la partie
-            runGame(ppj, ppe, ppl, pple, 1);
-          }
+          deroulementCombat(ppj, ppe, ppl, pple);
           break;
+          
         case 4:
           ((*ppj)->x += 1);
           ((*ppj)->y +=1);
           runGame(ppj, ppe, ppl, pple, 1);
 
           break;
+
         default:
           printf("\tEntrée incorrecte.\n");
           printf("\tS'il vous plait entrez une valeur correcte.\n");
           menuCombat(ppj, ppe, ppl, pple);
+
+        system("clear");
+      }
+    }while(1);
+}
+
+void deroulementCombat(Player **ppj, Enemy **ppe, ListePlayer **ppl, ListeEnemy **pple){
+  if((*ppe)->hp<=0){
+    // Si le joueur tue la monstre il recup ces ressources
+    (*ppj)->po+=(*ppe)->po;
+    (*ppj)->xp+=(*ppe)->xp;
+    (*ppj)->zebapik+=(*ppe)->zebapik;
+
+    // On déplace la joueur à +1 de ces coordonnées initiale
+    (*ppj)->y+=1;
+    (*ppj)->x+=1;
+
+    // On initialise à nouveau le monstre
+    initEnemy(ppe, pple);
+    randEnemy(ppe);
+
+    // On relance la partie
+    runGame(ppj, ppe, ppl, pple, 1);
+  }
+
+  if((*ppj)->hp<=0){
+    // Si le joueur tue la monstre il recup ces ressources
+    (*ppj)->y=15;
+    (*ppj)->x=23;
+
+    // On relance la partie
+    runGame(ppj, ppe, ppl, pple, 1);
+  }
+
+}
+
+
+void easterEgg(Player **ppj, Enemy **ppe, ListePlayer **ppl, ListeEnemy **pple){
+    int choix;
+    system("clear");
+
+    intro(7);
+
+    do{
+    //le tableau affiché dans le terminal
+    printf("\t*************************************************\n");
+    printf("\t|Pour préparer la potion anti C-virus ,\t\t|\n");
+    printf("\t|\t\t\t\t\t\t|\n" );
+    printf("\t|l’alchimiste du royaume utilise exclusivement  |\n\t|");
+    printf("des produits disponibles dans\t\t\t|\n" );
+    printf("\t|les contrées alentours.\t\t\t" );
+    printf("|\n\t|Notamment de l’huile de roche des falaises,\t|\n");
+    printf("\t|de l’extrait de trèfle, de la betterave rouge  |\n" );
+    printf("\t|ainsi qu’un bouillon marin à base\t\t|\n" );
+    printf("\t|de crustacés et de crevettes grises.\t\t|\n");
+    printf("\t|\t\t\t\t\t\t|\n" );
+    printf("\t|Pour parfumer le tout,\t\t\t\t|\n");
+    printf("\t|il précise qu’il ajoute un léger spray \t|\n" );
+    printf("\t|de parfum de la forêt, \t\t\t|\n" );
+    printf("\t|sans oublier l’ingrédient principal,\t\t|\n");
+    printf("\t|de la zebapik en grande quantité.\t\t|\n");
+    printf("\t|Côté préparation, comptez 5 à 6 heures\t\t|\n" );
+    printf("\t|de cuisson pour cette précieuse potion.\t|\n");
+    printf("\t|\t\t1 pour quitter\t\t\t|\n" );
+    printf("\t|\t\t\t\t\t\t|\n" );
+    printf("\t*************************************************\n" );
+    printf("\t");
+    scanf("%d", &choix);
+      switch (choix) // appel des différentes fonctions/procédures
+      {              // en fonction du choix fait par l'utilisateur
+        case 1:
+          runGame(ppj, ppe, ppl, pple, 1);
+          break;
+        default:
+          printf("Entrée incorrecte.\n");
+          printf("S'il vous plait entrez une valeur correcte.\n");
       }
       system("clear");
     }
     while(1);
 }
-
-
-
-
-
 
 
 

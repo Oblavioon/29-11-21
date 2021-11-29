@@ -28,7 +28,6 @@ int main(){
     ListeEnemy *ple;
     ple = (ListeEnemy *)malloc_protege(sizeof(ListeEnemy));
 
-
     runGame(&pj, &pe, &pl, &ple, 0);
 
     /*
